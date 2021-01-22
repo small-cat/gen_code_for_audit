@@ -1,0 +1,6 @@
+1. build ast for RuleElement
+2. implement GenCode function for operate, operate type and operate objects
+3. test
+  3.1 for rule like A | B
+  3.2 rule like A ( B C | D? E )
+  3.3 rule like A ( B C? (D E | F G? H) )

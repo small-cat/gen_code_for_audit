@@ -1,0 +1,30 @@
+(cfg_rule 
+ (alternative (rule_component (atom (identifier NUM)))) (label_def # (identifier numExpr))) 
+| 
+(cfg_rule 
+ (alternative 
+  (rule_component 
+   (label_element 
+    (label_name (identifier audit_op)) = 
+    (block ( 
+            (alternative (rule_component (atom (identifier CREATE)))) | 
+            (alternative (rule_component (atom (identifier DELETE)))) | 
+            (alternative (rule_component (atom (identifier UPDATE)))) )))
+  ) 
+  (rule_component 
+   (label_element 
+    (label_name (identifier audit_optype)) = 
+    (block ( 
+            (alternative 
+             (rule_component (atom (identifier TEMPORARY)) (closure_sign ?)) 
+             (rule_component (atom (identifier TABLE)))
+            ) | 
+            (alternative (rule_component (atom (identifier VIEW)))) | 
+            (alternative (rule_component (atom (identifier TEMP))) (rule_component (atom (identifier TRIGGER)))) )))
+  ) 
+  (rule_component 
+   (label_element 
+    (label_name (identifier audit_obj)) = (atom (identifier identifier)))
+  )
+ ) 
+(label_def # (identifier sqlExpr)))
