@@ -575,6 +575,8 @@ public class AuditGenParser extends Parser {
 		public Rule_componentContext rule_component(int i) {
 			return getRuleContext(Rule_componentContext.class,i);
 		}
+		public TerminalNode GEN_EOF() { return getToken(AuditGenParser.GEN_EOF, 0); }
+		public TerminalNode SEMICOLON() { return getToken(AuditGenParser.SEMICOLON, 0); }
 		public AlternativeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -584,30 +586,42 @@ public class AuditGenParser extends Parser {
 	public final AlternativeContext alternative() throws RecognitionException {
 		AlternativeContext _localctx = new AlternativeContext(_ctx, getState());
 		enterRule(_localctx, 20, RULE_alternative);
+		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(85); 
 			_errHandler.sync(this);
-			_alt = 1;
+			_la = _input.LA(1);
 			do {
-				switch (_alt) {
-				case 1:
-					{
-					{
-					setState(84);
-					rule_component();
-					}
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				{
+				{
+				setState(84);
+				rule_component();
+				}
 				}
 				setState(87); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
-			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
+				_la = _input.LA(1);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << LPAREN) | (1L << IDENTIFIER) | (1L << DQUOTA_STRING) | (1L << SQUOTA_STRING))) != 0) );
+			setState(90);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
+			case 1:
+				{
+				setState(89);
+				_la = _input.LA(1);
+				if ( !(_la==GEN_EOF || _la==SEMICOLON) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
+				}
+				}
+				break;
+			}
 			}
 		}
 		catch (RecognitionException re) {
@@ -622,24 +636,42 @@ public class AuditGenParser extends Parser {
 	}
 
 	public static class Rule_componentContext extends ParserRuleContext {
+		public Rule_componentContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_rule_component; }
+	 
+		public Rule_componentContext() { }
+		public void copyFrom(Rule_componentContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class Atom_componentContext extends Rule_componentContext {
+		public AtomContext atom() {
+			return getRuleContext(AtomContext.class,0);
+		}
+		public Closure_signContext closure_sign() {
+			return getRuleContext(Closure_signContext.class,0);
+		}
+		public Atom_componentContext(Rule_componentContext ctx) { copyFrom(ctx); }
+	}
+	public static class Block_componentContext extends Rule_componentContext {
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
+		}
+		public Closure_signContext closure_sign() {
+			return getRuleContext(Closure_signContext.class,0);
+		}
+		public Block_componentContext(Rule_componentContext ctx) { copyFrom(ctx); }
+	}
+	public static class Label_componentContext extends Rule_componentContext {
 		public Label_elementContext label_element() {
 			return getRuleContext(Label_elementContext.class,0);
 		}
 		public Closure_signContext closure_sign() {
 			return getRuleContext(Closure_signContext.class,0);
 		}
-		public AtomContext atom() {
-			return getRuleContext(AtomContext.class,0);
-		}
-		public BlockContext block() {
-			return getRuleContext(BlockContext.class,0);
-		}
-		public TerminalNode GEN_EOF() { return getToken(AuditGenParser.GEN_EOF, 0); }
-		public TerminalNode SEMICOLON() { return getToken(AuditGenParser.SEMICOLON, 0); }
-		public Rule_componentContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_rule_component; }
+		public Label_componentContext(Rule_componentContext ctx) { copyFrom(ctx); }
 	}
 
 	public final Rule_componentContext rule_component() throws RecognitionException {
@@ -647,20 +679,21 @@ public class AuditGenParser extends Parser {
 		enterRule(_localctx, 22, RULE_rule_component);
 		int _la;
 		try {
-			setState(103);
+			setState(104);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
+				_localctx = new Label_componentContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(89);
+				setState(92);
 				label_element();
-				setState(91);
+				setState(94);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STAR) | (1L << PLUS) | (1L << QUESTION))) != 0)) {
 					{
-					setState(90);
+					setState(93);
 					closure_sign();
 					}
 				}
@@ -668,16 +701,17 @@ public class AuditGenParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new Atom_componentContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(93);
+				setState(96);
 				atom();
-				setState(95);
+				setState(98);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STAR) | (1L << PLUS) | (1L << QUESTION))) != 0)) {
 					{
-					setState(94);
+					setState(97);
 					closure_sign();
 					}
 				}
@@ -685,34 +719,21 @@ public class AuditGenParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new Block_componentContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(97);
+				setState(100);
 				block();
-				setState(99);
+				setState(102);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STAR) | (1L << PLUS) | (1L << QUESTION))) != 0)) {
 					{
-					setState(98);
+					setState(101);
 					closure_sign();
 					}
 				}
 
-				}
-				break;
-			case 4:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(101);
-				match(GEN_EOF);
-				}
-				break;
-			case 5:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(102);
-				match(SEMICOLON);
 				}
 				break;
 			}
@@ -731,10 +752,7 @@ public class AuditGenParser extends Parser {
 	public static class Closure_signContext extends ParserRuleContext {
 		public TerminalNode STAR() { return getToken(AuditGenParser.STAR, 0); }
 		public TerminalNode PLUS() { return getToken(AuditGenParser.PLUS, 0); }
-		public List<TerminalNode> QUESTION() { return getTokens(AuditGenParser.QUESTION); }
-		public TerminalNode QUESTION(int i) {
-			return getToken(AuditGenParser.QUESTION, i);
-		}
+		public TerminalNode QUESTION() { return getToken(AuditGenParser.QUESTION, 0); }
 		public Closure_signContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -748,7 +766,7 @@ public class AuditGenParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(105);
+			setState(106);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << STAR) | (1L << PLUS) | (1L << QUESTION))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -758,16 +776,6 @@ public class AuditGenParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(107);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			if (_la==QUESTION) {
-				{
-				setState(106);
-				match(QUESTION);
-				}
-			}
-
 			}
 		}
 		catch (RecognitionException re) {
@@ -798,9 +806,9 @@ public class AuditGenParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(109);
+			setState(108);
 			match(POUND);
-			setState(110);
+			setState(109);
 			identifier();
 			}
 		}
@@ -838,24 +846,24 @@ public class AuditGenParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(112);
+			setState(111);
 			label_name();
-			setState(113);
+			setState(112);
 			match(EQUAL);
-			setState(116);
+			setState(115);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IDENTIFIER:
 			case DQUOTA_STRING:
 			case SQUOTA_STRING:
 				{
-				setState(114);
+				setState(113);
 				atom();
 				}
 				break;
 			case LPAREN:
 				{
-				setState(115);
+				setState(114);
 				block();
 				}
 				break;
@@ -891,7 +899,7 @@ public class AuditGenParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(118);
+			setState(117);
 			identifier();
 			}
 		}
@@ -932,27 +940,27 @@ public class AuditGenParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(119);
 			match(LPAREN);
-			setState(121);
+			setState(120);
 			alternative();
-			setState(126);
+			setState(125);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==BAR) {
 				{
 				{
-				setState(122);
+				setState(121);
 				match(BAR);
-				setState(123);
+				setState(122);
 				alternative();
 				}
 				}
-				setState(128);
+				setState(127);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(129);
+			setState(128);
 			match(RPAREN);
 			}
 		}
@@ -968,39 +976,39 @@ public class AuditGenParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\37\u0086\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\37\u0085\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\3\2\6\2&\n\2\r\2\16\2\'\3\2\3\2\3\3\3\3\3\3\5\3/\n\3\3\4\5\4\62\n\4\3"+
 		"\4\3\4\3\4\3\4\3\5\3\5\3\6\3\6\3\6\3\6\3\7\3\7\3\b\3\b\3\b\3\b\3\b\7\b"+
 		"E\n\b\f\b\16\bH\13\b\3\b\5\bK\n\b\3\b\3\b\3\t\3\t\3\n\3\n\3\13\3\13\5"+
-		"\13U\n\13\3\f\6\fX\n\f\r\f\16\fY\3\r\3\r\5\r^\n\r\3\r\3\r\5\rb\n\r\3\r"+
-		"\3\r\5\rf\n\r\3\r\3\r\5\rj\n\r\3\16\3\16\5\16n\n\16\3\17\3\17\3\17\3\20"+
-		"\3\20\3\20\3\20\5\20w\n\20\3\21\3\21\3\22\3\22\3\22\3\22\7\22\177\n\22"+
-		"\f\22\16\22\u0082\13\22\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24"+
-		"\26\30\32\34\36 \"\2\5\4\2\3\3\5\5\4\2\31\31\33\34\3\2\f\16\2\u0086\2"+
-		"%\3\2\2\2\4.\3\2\2\2\6\61\3\2\2\2\b\67\3\2\2\2\n9\3\2\2\2\f=\3\2\2\2\16"+
-		"?\3\2\2\2\20N\3\2\2\2\22P\3\2\2\2\24R\3\2\2\2\26W\3\2\2\2\30i\3\2\2\2"+
-		"\32k\3\2\2\2\34o\3\2\2\2\36r\3\2\2\2 x\3\2\2\2\"z\3\2\2\2$&\5\4\3\2%$"+
-		"\3\2\2\2&\'\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2()\3\2\2\2)*\7\2\2\3*\3\3\2\2"+
-		"\2+/\5\6\4\2,/\5\n\6\2-/\5\16\b\2.+\3\2\2\2.,\3\2\2\2.-\3\2\2\2/\5\3\2"+
-		"\2\2\60\62\t\2\2\2\61\60\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\64\7\4"+
-		"\2\2\64\65\5\b\5\2\65\66\7\24\2\2\66\7\3\2\2\2\678\5\f\7\28\t\3\2\2\2"+
-		"9:\7\b\2\2:;\5\f\7\2;<\7\24\2\2<\13\3\2\2\2=>\t\3\2\2>\r\3\2\2\2?@\5\20"+
-		"\t\2@A\7\n\2\2AF\5\24\13\2BC\7\23\2\2CE\5\24\13\2DB\3\2\2\2EH\3\2\2\2"+
-		"FD\3\2\2\2FG\3\2\2\2GJ\3\2\2\2HF\3\2\2\2IK\7\6\2\2JI\3\2\2\2JK\3\2\2\2"+
-		"KL\3\2\2\2LM\7\24\2\2M\17\3\2\2\2NO\5\f\7\2O\21\3\2\2\2PQ\5\f\7\2Q\23"+
+		"\13U\n\13\3\f\6\fX\n\f\r\f\16\fY\3\f\5\f]\n\f\3\r\3\r\5\ra\n\r\3\r\3\r"+
+		"\5\re\n\r\3\r\3\r\5\ri\n\r\5\rk\n\r\3\16\3\16\3\17\3\17\3\17\3\20\3\20"+
+		"\3\20\3\20\5\20v\n\20\3\21\3\21\3\22\3\22\3\22\3\22\7\22~\n\22\f\22\16"+
+		"\22\u0081\13\22\3\22\3\22\3\22\2\2\23\2\4\6\b\n\f\16\20\22\24\26\30\32"+
+		"\34\36 \"\2\6\4\2\3\3\5\5\4\2\31\31\33\34\4\2\6\6\24\24\3\2\f\16\2\u0083"+
+		"\2%\3\2\2\2\4.\3\2\2\2\6\61\3\2\2\2\b\67\3\2\2\2\n9\3\2\2\2\f=\3\2\2\2"+
+		"\16?\3\2\2\2\20N\3\2\2\2\22P\3\2\2\2\24R\3\2\2\2\26W\3\2\2\2\30j\3\2\2"+
+		"\2\32l\3\2\2\2\34n\3\2\2\2\36q\3\2\2\2 w\3\2\2\2\"y\3\2\2\2$&\5\4\3\2"+
+		"%$\3\2\2\2&\'\3\2\2\2\'%\3\2\2\2\'(\3\2\2\2()\3\2\2\2)*\7\2\2\3*\3\3\2"+
+		"\2\2+/\5\6\4\2,/\5\n\6\2-/\5\16\b\2.+\3\2\2\2.,\3\2\2\2.-\3\2\2\2/\5\3"+
+		"\2\2\2\60\62\t\2\2\2\61\60\3\2\2\2\61\62\3\2\2\2\62\63\3\2\2\2\63\64\7"+
+		"\4\2\2\64\65\5\b\5\2\65\66\7\24\2\2\66\7\3\2\2\2\678\5\f\7\28\t\3\2\2"+
+		"\29:\7\b\2\2:;\5\f\7\2;<\7\24\2\2<\13\3\2\2\2=>\t\3\2\2>\r\3\2\2\2?@\5"+
+		"\20\t\2@A\7\n\2\2AF\5\24\13\2BC\7\23\2\2CE\5\24\13\2DB\3\2\2\2EH\3\2\2"+
+		"\2FD\3\2\2\2FG\3\2\2\2GJ\3\2\2\2HF\3\2\2\2IK\7\6\2\2JI\3\2\2\2JK\3\2\2"+
+		"\2KL\3\2\2\2LM\7\24\2\2M\17\3\2\2\2NO\5\f\7\2O\21\3\2\2\2PQ\5\f\7\2Q\23"+
 		"\3\2\2\2RT\5\26\f\2SU\5\34\17\2TS\3\2\2\2TU\3\2\2\2U\25\3\2\2\2VX\5\30"+
-		"\r\2WV\3\2\2\2XY\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z\27\3\2\2\2[]\5\36\20\2\\"+
-		"^\5\32\16\2]\\\3\2\2\2]^\3\2\2\2^j\3\2\2\2_a\5 \21\2`b\5\32\16\2a`\3\2"+
-		"\2\2ab\3\2\2\2bj\3\2\2\2ce\5\"\22\2df\5\32\16\2ed\3\2\2\2ef\3\2\2\2fj"+
-		"\3\2\2\2gj\7\6\2\2hj\7\24\2\2i[\3\2\2\2i_\3\2\2\2ic\3\2\2\2ig\3\2\2\2"+
-		"ih\3\2\2\2j\31\3\2\2\2km\t\4\2\2ln\7\16\2\2ml\3\2\2\2mn\3\2\2\2n\33\3"+
-		"\2\2\2op\7\30\2\2pq\5\f\7\2q\35\3\2\2\2rs\5\22\n\2sv\7\25\2\2tw\5 \21"+
-		"\2uw\5\"\22\2vt\3\2\2\2vu\3\2\2\2w\37\3\2\2\2xy\5\f\7\2y!\3\2\2\2z{\7"+
-		"\17\2\2{\u0080\5\26\f\2|}\7\23\2\2}\177\5\26\f\2~|\3\2\2\2\177\u0082\3"+
-		"\2\2\2\u0080~\3\2\2\2\u0080\u0081\3\2\2\2\u0081\u0083\3\2\2\2\u0082\u0080"+
-		"\3\2\2\2\u0083\u0084\7\20\2\2\u0084#\3\2\2\2\20\'.\61FJTY]aeimv\u0080";
+		"\r\2WV\3\2\2\2XY\3\2\2\2YW\3\2\2\2YZ\3\2\2\2Z\\\3\2\2\2[]\t\4\2\2\\[\3"+
+		"\2\2\2\\]\3\2\2\2]\27\3\2\2\2^`\5\36\20\2_a\5\32\16\2`_\3\2\2\2`a\3\2"+
+		"\2\2ak\3\2\2\2bd\5 \21\2ce\5\32\16\2dc\3\2\2\2de\3\2\2\2ek\3\2\2\2fh\5"+
+		"\"\22\2gi\5\32\16\2hg\3\2\2\2hi\3\2\2\2ik\3\2\2\2j^\3\2\2\2jb\3\2\2\2"+
+		"jf\3\2\2\2k\31\3\2\2\2lm\t\5\2\2m\33\3\2\2\2no\7\30\2\2op\5\f\7\2p\35"+
+		"\3\2\2\2qr\5\22\n\2ru\7\25\2\2sv\5 \21\2tv\5\"\22\2us\3\2\2\2ut\3\2\2"+
+		"\2v\37\3\2\2\2wx\5\f\7\2x!\3\2\2\2yz\7\17\2\2z\177\5\26\f\2{|\7\23\2\2"+
+		"|~\5\26\f\2}{\3\2\2\2~\u0081\3\2\2\2\177}\3\2\2\2\177\u0080\3\2\2\2\u0080"+
+		"\u0082\3\2\2\2\u0081\177\3\2\2\2\u0082\u0083\7\20\2\2\u0083#\3\2\2\2\20"+
+		"\'.\61FJTY\\`dhju\177";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

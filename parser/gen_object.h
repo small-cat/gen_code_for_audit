@@ -6,6 +6,8 @@
 #include <string>
 #include <iostream>
 
+#include "ast/rule_element.h"
+
 struct OutputFunc {
   std::string parser_class_name;
   std::string listener_class_name;
@@ -21,37 +23,35 @@ public:
 
   void SetRuleName(std::string n);
   void SetLabel(std::string l);
-  void SetOperate(std::string op);
-  void SetOperateType(std::string t);
-  void SetObjectName(std::string n);
+  void SetOperate(ast::RuleElement *op);
+  void SetOperateType(ast::RuleElement *opty);
+  void SetObject(ast::RuleElement *obj);
 
   std::string rule_name();
   std::string label();
-  std::string operate();
-  std::string operate_type();
-  std::string object_name();
+  ast::RuleElement* operate();
+  ast::RuleElement* operate_type();
+  ast::RuleElement* object();
 
   std::string GetOperateType(std::string op);
 
-  bool Empty();
-  void Clear();
-
   void PrintObject(const std::string& parser_name);
-  void PrintBody();
-  void PrintHead();
   void WriteBody();
   void WriteHead();
 
   void GetFunctionDecl(const std::string& parser_name);
   void GetFileName(const std::string& parser_name);
+
+  bool IsEmpty();
+  void Reset();
 private:
   std::string ToUpperFirst(std::string str);
 
   std::string rule_name_;
   std::string label_;
-  std::string operate_;
-  std::string operate_type_;
-  std::string object_name_;
+  ast::RuleElement *operate_;
+  ast::RuleElement *operate_type_;
+  ast::RuleElement *object_;
 
   OutputFunc function_decl_;
 

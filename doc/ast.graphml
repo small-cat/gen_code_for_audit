@@ -16,10 +16,9 @@
     <data key="d0"/>
     <node id="n0">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="83.0" width="124.0" x="286.0" y="0.0"/>
+          <y:Geometry height="101.0" width="124.0" x="286.0" y="-18.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
           <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="96.5234375" x="13.73828125" y="3.0">RuleElement<y:LabelModel>
@@ -30,7 +29,7 @@
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel/>
+            <y:AttributeLabel>ident</y:AttributeLabel>
             <y:MethodLabel>GenObjCode()
 GenOperateCode()
 GenOptypeCode()</y:MethodLabel>
@@ -40,13 +39,12 @@ GenOptypeCode()</y:MethodLabel>
     </node>
     <node id="n1">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="45.0" width="100.0" x="174.0" y="132.0"/>
+          <y:Geometry height="45.0" width="130.0" x="159.0" y="132.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="96.00927734375" x="1.995361328125" y="3.0">RuleEleMulti<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="96.00927734375" x="16.995361328125" y="3.0">RuleEleMulti<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -54,7 +52,7 @@ GenOptypeCode()</y:MethodLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>rule_name</y:AttributeLabel>
+            <y:AttributeLabel>RuleElement* rule_</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
@@ -62,7 +60,6 @@ GenOptypeCode()</y:MethodLabel>
     </node>
     <node id="n2">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="45.0" width="133.0" x="304.0" y="132.0"/>
@@ -76,7 +73,7 @@ GenOptypeCode()</y:MethodLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>rule_name</y:AttributeLabel>
+            <y:AttributeLabel>RuleElement* rule_</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
@@ -84,7 +81,6 @@ GenOptypeCode()</y:MethodLabel>
     </node>
     <node id="n3">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="45.0" width="218.0" x="467.0" y="132.0"/>
@@ -98,7 +94,7 @@ GenOptypeCode()</y:MethodLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>vector&lt;RuleElement *&gt; token_list</y:AttributeLabel>
+            <y:AttributeLabel>vector&lt;RuleElement *&gt; rule_list</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
@@ -106,13 +102,12 @@ GenOptypeCode()</y:MethodLabel>
     </node>
     <node id="n4">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
-          <y:Geometry height="63.0" width="144.0" x="0.0" y="123.0"/>
+          <y:Geometry height="63.0" width="164.0" x="-20.0" y="123.0"/>
           <y:Fill color="#FFCC00" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="132.5908203125" x="5.70458984375" y="3.0">RuleEleWithLabel<y:LabelModel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="13" fontStyle="bold" hasBackgroundColor="false" hasLineColor="false" height="19.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="custom" textColor="#000000" verticalTextPosition="bottom" visible="true" width="132.5908203125" x="15.70458984375" y="3.0">RuleEleWithLabel<y:LabelModel>
               <y:SmartNodeLabelModel distance="4.0"/>
             </y:LabelModel>
             <y:ModelParameter>
@@ -120,8 +115,8 @@ GenOptypeCode()</y:MethodLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>label_name
-rule_name</y:AttributeLabel>
+            <y:AttributeLabel>string label_name
+RuleElement* rule_</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
@@ -129,7 +124,6 @@ rule_name</y:AttributeLabel>
     </node>
     <node id="n5">
       <data key="d4"/>
-      <data key="d5"/>
       <data key="d6">
         <y:UMLClassNode>
           <y:Geometry height="45.0" width="124.0" x="286.0" y="226.0"/>
@@ -143,17 +137,16 @@ rule_name</y:AttributeLabel>
             </y:ModelParameter>
           </y:NodeLabel>
           <y:UML clipContent="true" constraint="" hasDetailsColor="false" omitDetails="false" stereotype="" use3DEffect="true">
-            <y:AttributeLabel>rule_name</y:AttributeLabel>
+            <y:AttributeLabel>string rule_</y:AttributeLabel>
             <y:MethodLabel/>
           </y:UML>
         </y:UMLClassNode>
       </data>
     </node>
     <edge id="e0" source="n1" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-22.5" tx="-24.799999999999997" ty="41.5">
+          <y:Path sx="0.0" sy="-22.5" tx="-24.799999999999997" ty="50.49999999999999">
             <y:Point x="224.0" y="103.0"/>
             <y:Point x="323.2" y="103.0"/>
           </y:Path>
@@ -164,10 +157,9 @@ rule_name</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e1" source="n2" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-22.5" tx="0.0" ty="41.5">
+          <y:Path sx="0.0" sy="-22.5" tx="0.0" ty="50.49999999999999">
             <y:Point x="370.5" y="108.0"/>
             <y:Point x="348.0" y="108.0"/>
           </y:Path>
@@ -178,10 +170,9 @@ rule_name</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e2" source="n3" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-22.5" tx="24.80000000000001" ty="41.5">
+          <y:Path sx="0.0" sy="-22.5" tx="24.80000000000001" ty="50.49999999999999">
             <y:Point x="576.0" y="103.0"/>
             <y:Point x="372.8" y="103.0"/>
           </y:Path>
@@ -192,10 +183,9 @@ rule_name</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e3" source="n4" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="0.0" sy="-31.5" tx="-49.6" ty="41.5">
+          <y:Path sx="0.0" sy="-31.5" tx="-49.6" ty="50.49999999999999">
             <y:Point x="72.0" y="98.0"/>
             <y:Point x="298.4" y="98.0"/>
           </y:Path>
@@ -206,10 +196,9 @@ rule_name</y:AttributeLabel>
       </data>
     </edge>
     <edge id="e4" source="n5" target="n0">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
-          <y:Path sx="49.60000000000001" sy="-22.5" tx="49.60000000000001" ty="41.5">
+          <y:Path sx="49.60000000000001" sy="-22.5" tx="49.60000000000001" ty="50.49999999999999">
             <y:Point x="397.6" y="211.0"/>
             <y:Point x="695.5" y="211.0"/>
             <y:Point x="695.5" y="98.0"/>

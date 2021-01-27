@@ -19,15 +19,15 @@ std::map<std::string, std::string> AuditGenObject::OperateTypes = {
 
 void AuditGenObject::SetRuleName(std::string n) { rule_name_ = n; }
 void AuditGenObject::SetLabel(std::string l) { label_ = l; }
-void AuditGenObject::SetOperate(std::string op) { operate_ = op; }
-void AuditGenObject::SetOperateType(std::string t) { operate_type_ = t; }
-void AuditGenObject::SetObjectName(std::string n) { object_name_ = n; }
+void AuditGenObject::SetOperate(ast::RuleElement *op) { operate_ = op; }
+void AuditGenObject::SetOperateType(ast::RuleElement *t) { operate_type_ = t; }
+void AuditGenObject::SetObject(ast::RuleElement *n) { object_ = n; }
 
 std::string AuditGenObject::rule_name() { return rule_name_; }
 std::string AuditGenObject::label() { return label_; }
-std::string AuditGenObject::operate() { return operate_; }
-std::string AuditGenObject::operate_type() { return operate_type_; }
-std::string AuditGenObject::object_name() { return object_name_; }
+ast::RuleElement* AuditGenObject::operate() { return operate_; }
+ast::RuleElement* AuditGenObject::operate_type() { return operate_type_; }
+ast::RuleElement* AuditGenObject::object() { return object_; }
 
 std::string AuditGenObject::GetOperateType(std::string op) {
   auto search = OperateTypes.find(op);
@@ -38,17 +38,6 @@ std::string AuditGenObject::GetOperateType(std::string op) {
   return search->second;
 }
 
-bool AuditGenObject::Empty() {
-  return operate_.empty();
-}
-
-void AuditGenObject::Clear() {
-  label_.clear();
-  operate_.clear();
-  operate_type_.clear();
-  object_name_.clear();
-}
-
 void AuditGenObject::PrintObject(const std::string& parser_name) {
   if (parser_name.empty()) {
     std::cout << "Error: parser name is empty." << std::endl;
@@ -57,8 +46,6 @@ void AuditGenObject::PrintObject(const std::string& parser_name) {
 
   GetFileName(parser_name);
   GetFunctionDecl(parser_name);
-  PrintHead();
-  PrintBody();
 
   // write file
   WriteHead();
@@ -97,50 +84,67 @@ void AuditGenObject::GetFileName(const std::string& parser_name) {
   cpp_src_file_ = std::string(buf) + "/" + class_name + ".cpp";
 }
 
-void AuditGenObject::PrintBody() {
-  std::cout << "void " << function_decl_.listener_class_name << "::" << function_decl_.func_name_decl << " {" << std::endl;
-  if (operate_type_.empty()) {
-    operate_type_ = GetOperateType(operate_);
-  }
-  std::cout << "  SetOperateInfo(operate_info_, \"" << operate_ << "\", \""
-    << operate_type_ << "\");" << std::endl;
+void AuditGenObject::Reset() {
+  operate_ = nullptr;
+  operate_type_ = nullptr;
+  object_ = nullptr;
+}
 
-  if (!object_name_.empty()) {
-    std::cout << "  auto obj = CreateOperateObject(tokens_->getText(ctx->" << object_name_ << "()));" << std::endl;  
-    std::cout << "  operate_info_.objects.push_back(obj);" << std::endl;
-  }
-
-  std::cout << "  operate_info_list_.push_back(operate_info_);" << std::endl;
-
-  std::cout << "}" << std::endl;
+bool AuditGenObject::IsEmpty() {
+  return operate_ == nullptr;
 }
 
 void AuditGenObject::WriteBody() {
   std::ofstream fbody;
   fbody.open(cpp_src_file_, std::ios::binary | std::ios::app | std::ios::out);
 
-  fbody << "void " << function_decl_.listener_class_name << "::" << function_decl_.func_name_decl << "{ \n";
-  if (operate_type_.empty()) {
-    operate_type_ = GetOperateType(operate_);
+  fbody << "void " << function_decl_.listener_class_name << "::" << function_decl_.func_name_decl << " { \n";
+
+  // declare variables
+  std::string opvar = "opstr";
+  std::string opty_var = "opty_str";
+  std::string objvar = "objstr";
+
+  std::string out_str {""};
+
+  if (operate_ == nullptr) {
+    std::cout << "Error: operate is empty." << std::endl;
+    return;
+  } else {
+    out_str += "  std::string " + opvar + ";\n";
+    operate_->Indent();
+    out_str += operate_->GenOperateCode(opvar);
+    operate_->UnIndent();
   }
 
-  fbody << "  SetOperateInfo(operate_info_, \"" << operate_ << "\", \""
-    << operate_type_ << "\");\n";
-
-  if (!object_name_.empty()) {
-    fbody << "  auto obj = CreateOperateObject(tokens->getText(ctx->" << object_name_ << "()));\n";
-    fbody << "  operate_info_.objects.push_back(obj);\n";
+  out_str += "\n  std::string " + opty_var + ";\n";
+  if (operate_type_ == nullptr) {
+    out_str += "  " + opty_var + " = \"TABLE\";\n";   // table is default
+  } else {
+    operate_type_->Indent();
+    out_str += operate_type_->GenOperateTypeCode(opty_var);
+    operate_type_->UnIndent();
   }
+
+  if (object_ != nullptr) {
+    out_str += "\n  std::string " + objvar + ";\n";
+    object_->Indent();
+    out_str += object_->GenObjectCode(objvar);
+    object_->UnIndent();
+
+    out_str += "  auto obj = CreateOperateObject(" + objvar + ");\n";
+    out_str += "  operate_info_.objects.push_back(obj);\n";
+  }
+
+  fbody << out_str << "\n";
+  fbody << "  SetOperateInfo(operate_info_, " << opvar << ", "
+        << opty_var << ");\n";
 
   fbody << "  operate_info_list_.push_back(operate_info_);\n";
   fbody << "}\n";
   fbody << "\n";
 
   fbody.close();
-}
-
-void AuditGenObject::PrintHead() {
-  std::cout << "virtual void " << function_decl_.func_name_decl << ";" << std::endl;
 }
 
 void AuditGenObject::WriteHead() {

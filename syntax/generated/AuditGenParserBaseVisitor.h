@@ -59,7 +59,15 @@ public:
     return visitChildren(ctx);
   }
 
-  virtual antlrcpp::Any visitRule_component(AuditGenParser::Rule_componentContext *ctx) override {
+  virtual antlrcpp::Any visitLabel_component(AuditGenParser::Label_componentContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitAtom_component(AuditGenParser::Atom_componentContext *ctx) override {
+    return visitChildren(ctx);
+  }
+
+  virtual antlrcpp::Any visitBlock_component(AuditGenParser::Block_componentContext *ctx) override {
     return visitChildren(ctx);
   }
 

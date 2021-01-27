@@ -16,6 +16,7 @@ void ParseFile(const Options &opt);
 int main(int argc, char *argv[]) {
   if (5 != argc) {
     PrintUsage(argv[0]);
+    return 0;
   }
 
   Options opts;
@@ -27,12 +28,13 @@ int main(int argc, char *argv[]) {
       opts.db_type = std::string(optarg);
     } else {
       PrintUsage(argv[0]);
+      return 0;
     }
   }
 
   if (opts.filename.empty() || opts.db_type.empty()) {
     PrintUsage(argv[0]);
-    exit(EXIT_FAILURE);
+    return 0;
   }
 
   ParseFile(opts);

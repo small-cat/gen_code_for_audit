@@ -65,12 +65,15 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/antlr4cpp/src/support
   ${PROJECT_SOURCE_DIR}/syntax/generated
   ${PROJECT_SOURCE_DIR}/parser
+  ${PROJECT_SOURCE_DIR}/
   )
 
 #file(GLOB antlr4-gen_audit_SRC "${PROJECT_SOURCE_DIR}/gen_audit/generated/*")
 file(GLOB_RECURSE PARSER_SRC "${PROJECT_SOURCE_DIR}/parser/*.cpp")
+file(GLOB_RECURSE AST_SRC "${PROJECT_SOURCE_DIR}/ast/*.cpp")
 set(antlr4-gen_audit_SRC 
   ${PARSER_SRC}
+  ${AST_SRC}
   ${PROJECT_SOURCE_DIR}/main/main.cpp
   ${antlr4-gen_audit-GENERATED_SRC}
   )

@@ -232,6 +232,8 @@ public:
     virtual size_t getRuleIndex() const override;
     std::vector<Rule_componentContext *> rule_component();
     Rule_componentContext* rule_component(size_t i);
+    antlr4::tree::TerminalNode *GEN_EOF();
+    antlr4::tree::TerminalNode *SEMICOLON();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -245,19 +247,50 @@ public:
   class  Rule_componentContext : public antlr4::ParserRuleContext {
   public:
     Rule_componentContext(antlr4::ParserRuleContext *parent, size_t invokingState);
-    virtual size_t getRuleIndex() const override;
-    Label_elementContext *label_element();
-    Closure_signContext *closure_sign();
-    AtomContext *atom();
-    BlockContext *block();
-    antlr4::tree::TerminalNode *GEN_EOF();
-    antlr4::tree::TerminalNode *SEMICOLON();
+   
+    Rule_componentContext() : antlr4::ParserRuleContext() { }
+    void copyFrom(Rule_componentContext *context);
+    using antlr4::ParserRuleContext::copyFrom;
 
+    virtual size_t getRuleIndex() const override;
+
+   
+  };
+
+  class  Atom_componentContext : public Rule_componentContext {
+  public:
+    Atom_componentContext(Rule_componentContext *ctx);
+
+    AtomContext *atom();
+    Closure_signContext *closure_sign();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
     virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
-   
+  };
+
+  class  Block_componentContext : public Rule_componentContext {
+  public:
+    Block_componentContext(Rule_componentContext *ctx);
+
+    BlockContext *block();
+    Closure_signContext *closure_sign();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
+  };
+
+  class  Label_componentContext : public Rule_componentContext {
+  public:
+    Label_componentContext(Rule_componentContext *ctx);
+
+    Label_elementContext *label_element();
+    Closure_signContext *closure_sign();
+    virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
+    virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
+
+    virtual antlrcpp::Any accept(antlr4::tree::ParseTreeVisitor *visitor) override;
   };
 
   Rule_componentContext* rule_component();
@@ -268,8 +301,7 @@ public:
     virtual size_t getRuleIndex() const override;
     antlr4::tree::TerminalNode *STAR();
     antlr4::tree::TerminalNode *PLUS();
-    std::vector<antlr4::tree::TerminalNode *> QUESTION();
-    antlr4::tree::TerminalNode* QUESTION(size_t i);
+    antlr4::tree::TerminalNode *QUESTION();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

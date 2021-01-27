@@ -47,8 +47,14 @@ public:
   virtual void enterAlternative(AuditGenParser::AlternativeContext *ctx) = 0;
   virtual void exitAlternative(AuditGenParser::AlternativeContext *ctx) = 0;
 
-  virtual void enterRule_component(AuditGenParser::Rule_componentContext *ctx) = 0;
-  virtual void exitRule_component(AuditGenParser::Rule_componentContext *ctx) = 0;
+  virtual void enterLabel_component(AuditGenParser::Label_componentContext *ctx) = 0;
+  virtual void exitLabel_component(AuditGenParser::Label_componentContext *ctx) = 0;
+
+  virtual void enterAtom_component(AuditGenParser::Atom_componentContext *ctx) = 0;
+  virtual void exitAtom_component(AuditGenParser::Atom_componentContext *ctx) = 0;
+
+  virtual void enterBlock_component(AuditGenParser::Block_componentContext *ctx) = 0;
+  virtual void exitBlock_component(AuditGenParser::Block_componentContext *ctx) = 0;
 
   virtual void enterClosure_sign(AuditGenParser::Closure_signContext *ctx) = 0;
   virtual void exitClosure_sign(AuditGenParser::Closure_signContext *ctx) = 0;

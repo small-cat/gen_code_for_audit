@@ -1,6 +1,9 @@
-1. build ast for RuleElement
-2. implement GenCode function for operate, operate type and operate objects
-3. test
+1. build ast for RuleElement -- DONE
+2. implement GenCode function for operate, operate type and operate objects -- DONE
+3. test -- DOING
   3.1 for rule like A | B
   3.2 rule like A ( B C | D? E )
   3.3 rule like A ( B C? (D E | F G? H) )
+
+4. fix rule* and rule+, multi rule element
+5. add map to find operate type if operate type is not specified.

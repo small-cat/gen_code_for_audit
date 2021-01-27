@@ -13,8 +13,8 @@ public:
 
   void WriteHeaderFileHead(const std::string& db_type);
   void WriteHeaderFileTail(const std::string& db_type);
-  void WriteSrcFileHead();
-  void WriteSrcFileTail();
+  void WriteSrcFileHead(const std::string& db_type);
+  void WriteSrcFileTail(const std::string& db_type);
 
   std::string header_file();
   std::string cpp_src_file();

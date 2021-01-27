@@ -55,7 +55,7 @@ cfg_rule
     ;
 
 alternative
-    : rule_component+
+    : rule_component+ (GEN_EOF | SEMICOLON)?
     ;
 
 /*
@@ -71,11 +71,9 @@ rule_component
 */
 
 rule_component
-    : label_element closure_sign?
-    | atom closure_sign?
-    | block closure_sign? 
-    | GEN_EOF
-    | SEMICOLON
+    : label_element closure_sign? # label_component
+    | atom closure_sign?          # atom_component
+    | block closure_sign?         # block_component
     ;
 
 closure_sign

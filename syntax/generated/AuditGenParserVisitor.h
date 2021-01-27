@@ -41,7 +41,11 @@ public:
 
     virtual antlrcpp::Any visitAlternative(AuditGenParser::AlternativeContext *context) = 0;
 
-    virtual antlrcpp::Any visitRule_component(AuditGenParser::Rule_componentContext *context) = 0;
+    virtual antlrcpp::Any visitLabel_component(AuditGenParser::Label_componentContext *context) = 0;
+
+    virtual antlrcpp::Any visitAtom_component(AuditGenParser::Atom_componentContext *context) = 0;
+
+    virtual antlrcpp::Any visitBlock_component(AuditGenParser::Block_componentContext *context) = 0;
 
     virtual antlrcpp::Any visitClosure_sign(AuditGenParser::Closure_signContext *context) = 0;
 

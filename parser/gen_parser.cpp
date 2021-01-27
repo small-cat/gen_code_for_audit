@@ -5,7 +5,7 @@
 #include "../syntax/generated/AuditGenLexer.h"
 #include "../syntax/generated/AuditGenParser.h"
 #include "../syntax/generated/AuditGenParserBaseVisitor.h"
-#include "gen_listener.hpp"
+#include "gen_visitor.h"
 #include "error_verbose_listener.h"
 
 using namespace antlr4;
@@ -98,15 +98,15 @@ void GenParser::WriteHeaderFileTail(const std::string& db_type) {
   fhead.close();
 }
 
-void GenParser::WriteSrcFileHead() {
+void GenParser::WriteSrcFileHead(const std::string& db_type) {
   std::ofstream fsrc;
   fsrc.open(cpp_src_file_, std::ios::binary | std::ios::app | std::ios::out);
 
   fsrc << "#include \"" << class_name_ + ".h"<< "\"\n";
   fsrc << "\n";
 
-  fsrc << "namespace XXXX {\n";
-  fsrc << "using namespace antlr4;\n";
+  fsrc << "namespace " << db_type << " {\n";
+  // fsrc << "using namespace antlr4;\n";
   fsrc << "using namespace sqlparse;\n";
 
   // constructure and destructure
@@ -128,7 +128,7 @@ void GenParser::WriteSrcFileHead() {
   fsrc.close();
 }
 
-void GenParser::WriteSrcFileTail() {
+void GenParser::WriteSrcFileTail(const std::string& db_type) {
   std::ofstream fsrc;
   fsrc.open(cpp_src_file_, std::ios::binary | std::ios::app | std::ios::out);
 
@@ -145,7 +145,7 @@ void GenParser::WriteSrcFileTail() {
   fsrc << "}\n";
   fsrc << "\n";
 
-  fsrc << "} // end namespace\n";
+  fsrc << "} // end namespace " << db_type << " \n";
 
   fsrc.close();
 }
@@ -176,26 +176,28 @@ void GenParser::ParseG4File(const std::string& filename, const std::string& db_t
   }
   std::cout << ((tree::ParseTree*)multi_stmts_ctx)->toStringTree(&parser) << "\n";
 
-  /*
-  tree::ParseTreeWalker walker;
   auto stmts_ctx = multi_stmts_ctx->stmt();
   for (auto& stmt_ctx : stmts_ctx) {
-    AuditGenListener aud(&parser);
-    walker.walk(&aud, stmt_ctx);
+    AuditGenVisitor aud(&parser);
+    aud.visitStmt(stmt_ctx);
 
     if (stmt_ctx->header_stmt()) {
       parser_name_ = aud.parser_name();
       GetFileName();
-      WriteHeaderFileHead();
-      WriteSrcFileHead();
+      WriteHeaderFileHead(db_type);
+      WriteSrcFileHead(db_type);
     } else if (stmt_ctx->cfg_rule_stmt()) {
-      aud.PrintObjects(parser_name_);
+      auto objs = aud.GetObjects();
+      for (auto obj : objs) {
+        if (!obj.IsEmpty()) {
+          obj.PrintObject(parser_name_);
+        }
+      }
     } else {
       continue;
     }
   }
 
-  WriteHeaderFileTail();
-  WriteSrcFileTail();
-  */
+  WriteHeaderFileTail(db_type);
+  WriteSrcFileTail(db_type);
 }
