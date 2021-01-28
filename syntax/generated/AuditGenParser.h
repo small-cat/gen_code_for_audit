@@ -232,8 +232,10 @@ public:
     virtual size_t getRuleIndex() const override;
     std::vector<Rule_componentContext *> rule_component();
     Rule_componentContext* rule_component(size_t i);
-    antlr4::tree::TerminalNode *GEN_EOF();
-    antlr4::tree::TerminalNode *SEMICOLON();
+    std::vector<antlr4::tree::TerminalNode *> GEN_EOF();
+    antlr4::tree::TerminalNode* GEN_EOF(size_t i);
+    std::vector<antlr4::tree::TerminalNode *> SEMICOLON();
+    antlr4::tree::TerminalNode* SEMICOLON(size_t i);
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -262,7 +264,6 @@ public:
     Atom_componentContext(Rule_componentContext *ctx);
 
     AtomContext *atom();
-    Closure_signContext *closure_sign();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -274,7 +275,6 @@ public:
     Block_componentContext(Rule_componentContext *ctx);
 
     BlockContext *block();
-    Closure_signContext *closure_sign();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -286,7 +286,6 @@ public:
     Label_componentContext(Rule_componentContext *ctx);
 
     Label_elementContext *label_element();
-    Closure_signContext *closure_sign();
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
 
@@ -351,6 +350,7 @@ public:
     AtomContext(antlr4::ParserRuleContext *parent, size_t invokingState);
     virtual size_t getRuleIndex() const override;
     IdentifierContext *identifier();
+    Closure_signContext *closure_sign();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;
@@ -371,6 +371,7 @@ public:
     antlr4::tree::TerminalNode *RPAREN();
     std::vector<antlr4::tree::TerminalNode *> BAR();
     antlr4::tree::TerminalNode* BAR(size_t i);
+    Closure_signContext *closure_sign();
 
     virtual void enterRule(antlr4::tree::ParseTreeListener *listener) override;
     virtual void exitRule(antlr4::tree::ParseTreeListener *listener) override;

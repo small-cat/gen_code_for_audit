@@ -119,7 +119,9 @@ void AuditGenObject::WriteBody() {
 
   out_str += "\n  std::string " + opty_var + ";\n";
   if (operate_type_ == nullptr) {
-    out_str += "  " + opty_var + " = \"TABLE\";\n";   // table is default
+    // out_str += "  " + opty_var + " = \"TABLE\";\n";   // table is default
+    // find operate type from map
+    out_str += "  " + opty_var + " = GetOperateType(" + opvar + ");\n";
   } else {
     operate_type_->Indent();
     out_str += operate_type_->GenOperateTypeCode(opty_var);
@@ -127,13 +129,20 @@ void AuditGenObject::WriteBody() {
   }
 
   if (object_ != nullptr) {
-    out_str += "\n  std::string " + objvar + ";\n";
+    if (!object_->IsRuleMulti()) {
+      out_str += "\n  std::string " + objvar + ";\n";
+    } else {
+      out_str += "\n";
+    }
+
     object_->Indent();
     out_str += object_->GenObjectCode(objvar);
     object_->UnIndent();
 
-    out_str += "  auto obj = CreateOperateObject(" + objvar + ");\n";
-    out_str += "  operate_info_.objects.push_back(obj);\n";
+    if (!object_->IsRuleMulti()) {
+      out_str += "  auto obj = CreateOperateObject(" + objvar + ");\n";
+      out_str += "  operate_info_.objects.push_back(obj);\n";
+    }
   }
 
   fbody << out_str << "\n";

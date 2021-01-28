@@ -13,7 +13,7 @@ std::string RuleEleBlock::GenOperateCode(std::string varname) {
   std::string res {""};
   std::string else_str {""};
 
-  std::string tmpvar = "tmp_op";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   for (auto ele : rule_list_) {
     res += else_str;
@@ -36,7 +36,7 @@ std::string RuleEleBlock::GenOperateTypeCode(std::string varname) {
   std::string res{""};
   std::string else_str {""};
 
-  std::string tmpvar = "tmp_opty";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   for (auto ele : rule_list_) {
     res += else_str;
@@ -60,7 +60,7 @@ std::string RuleEleBlock::GenObjectCode(std::string varname) {
   std::string res{""};
   std::string else_str {""};
 
-  std::string tmpvar = "tmp_obj";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   for (auto ele : rule_list_) {
     res += else_str;
@@ -87,4 +87,9 @@ std::string RuleEleBlock::ToString() {
 void RuleEleBlock::AddRuleElement(RuleElement *r) {
   rule_list_.push_back(r);
 }
+
+bool RuleEleBlock::IsRuleBlock() {
+  return true;
+}
+
 } /* ast */

@@ -23,6 +23,7 @@ public:
   std::string GenOperateTypeCode(std::string varname);
   std::string GenObjectCode(std::string varname);
   std::string ToString();
+  bool IsRuleMulti();
 private:
   RuleElement *rule_;
   std::string rule_name_;

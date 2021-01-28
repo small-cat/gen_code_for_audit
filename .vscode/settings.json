@@ -58,7 +58,8 @@
   },
   "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
   "cmake.debugConfig": {
-    "args": ["-f", "/home/jona/myGit/gen_code_for_audit/test/Math.g4", "-t", "math"],
+    "args": ["-f", "/home/jona/myGit/gen_code_for_audit/test/tmp.g4", "-t", "math"],
     "MIMode": "gdb"
-  }
+  },
+  "cmake.configureOnOpen": true
 }

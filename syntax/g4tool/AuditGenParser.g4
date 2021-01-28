@@ -55,7 +55,7 @@ cfg_rule
     ;
 
 alternative
-    : rule_component+ (GEN_EOF | SEMICOLON)?
+    : (rule_component | GEN_EOF | SEMICOLON)+
     ;
 
 /*
@@ -71,9 +71,9 @@ rule_component
 */
 
 rule_component
-    : label_element closure_sign? # label_component
-    | atom closure_sign?          # atom_component
-    | block closure_sign?         # block_component
+    : label_element  # label_component
+    | atom           # atom_component
+    | block          # block_component
     ;
 
 closure_sign
@@ -89,9 +89,9 @@ label_element
     ;
 
 atom
-    : identifier
+    : identifier closure_sign?
     ;
 
 block
-    : LPAREN alternative (BAR alternative)* RPAREN
+    : LPAREN alternative (BAR alternative)* RPAREN closure_sign?
     ;

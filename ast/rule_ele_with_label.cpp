@@ -26,11 +26,11 @@ std::string RuleEleWithLabel::GenOperateTypeCode(std::string varname) {
 * @date 2021/01/26
 ************************************************************************************/
 std::string RuleEleWithLabel::GenObjectCode(std::string varname) {
-  return PrintIndent() + varname + " = tokens_->getText(" + label_name_ + ");\n";
+  return PrintIndent() + varname + " = tokens_->getText(ctx->" + label_name_ + ");\n";
 }
 
 std::string RuleEleWithLabel::ToString() {
-  return "ctx->" + label_name_ + "()";
+  return "ctx->" + label_name_ + "";
 }
 
 } /* ast */

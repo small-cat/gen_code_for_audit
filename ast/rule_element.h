@@ -64,6 +64,12 @@ public:
 
   virtual std::string ToString() = 0;
   virtual bool IsRuleWithQuestion() { return false; }
+  virtual bool IsRuleMulti() { return false; }
+  virtual bool IsRuleBlock() { return false; }
+
+  // unique id
+  static int UNIQ_ID;
+  std::string GetUniqId();
 private:
   int indent_;
 };

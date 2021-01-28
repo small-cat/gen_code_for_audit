@@ -46,14 +46,13 @@ antlrcpp::Any AuditGenVisitor::visitHeader_stmt(AuditGenParser::Header_stmtConte
 
 antlrcpp::Any AuditGenVisitor::visitCfg_rule_stmt(AuditGenParser::Cfg_rule_stmtContext *ctx) {
   std::string rname = tokens_->getText(ctx->rule_name());
+  gen_obj_.Reset();
   gen_obj_.SetRuleName(rname);
 
   auto rules_ctx = ctx->cfg_rule();
   for (auto r : rules_ctx) {
     visit(r);
     gen_objects_.push_back(gen_obj_);
-
-    gen_obj_.Reset();
   }
 
   return visitChildren(ctx);
@@ -73,17 +72,17 @@ antlrcpp::Any AuditGenVisitor::visitLabel_component(AuditGenParser::Label_compon
   auto label_ele_ctx = ctx->label_element();
   ast::RuleElement *ele = visit(label_ele_ctx);
 
-  auto closure_ctx = ctx->closure_sign();
-  if (closure_ctx == nullptr) {
-    return (antlrcpp::Any)ele;
-  }
+  // auto closure_ctx = ctx->closure_sign();
+  // if (closure_ctx == nullptr) {
+  //   return (antlrcpp::Any)ele;
+  // }
 
-  if (closure_ctx->QUESTION()) {
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(label_ele_ctx));
-  } else {
-    // *, +
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(label_ele_ctx));
-  }
+  // if (closure_ctx->QUESTION()) {
+  //   ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(label_ele_ctx));
+  // } else {
+  //   // *, +
+  //   ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(label_ele_ctx));
+  // }
 
   return (antlrcpp::Any)(ele);
 }
@@ -92,17 +91,17 @@ antlrcpp::Any AuditGenVisitor::visitAtom_component(AuditGenParser::Atom_componen
   auto atom_ctx = ctx->atom();
   ast::RuleElement *ele = visit(atom_ctx);
 
-  auto closure_ctx = ctx->closure_sign();
-  if (closure_ctx == nullptr) {
-    return (antlrcpp::Any)ele;
-  }
+  // auto closure_ctx = ctx->closure_sign();
+  // if (closure_ctx == nullptr) {
+    // return (antlrcpp::Any)ele;
+  // }
 
-  if (closure_ctx->QUESTION()) {
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(atom_ctx));
-  } else {
-    // *, +
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(atom_ctx));
-  }
+  // if (closure_ctx->QUESTION()) {
+    // ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(atom_ctx));
+  // } else {
+    // // *, +
+    // ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(atom_ctx));
+  // }
 
   return (antlrcpp::Any)(ele);
 }
@@ -111,17 +110,17 @@ antlrcpp::Any AuditGenVisitor::visitBlock_component(AuditGenParser::Block_compon
   auto block_ctx = ctx->block();
   ast::RuleElement *ele = visit(block_ctx);
 
-  auto closure_ctx = ctx->closure_sign();
-  if (closure_ctx == nullptr) {
-    return (antlrcpp::Any)ele;
-  }
+  // auto closure_ctx = ctx->closure_sign();
+  // if (closure_ctx == nullptr) {
+  //   return (antlrcpp::Any)ele;
+  // }
 
-  if (closure_ctx->QUESTION()) {
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(block_ctx));
-  } else {
-    // *, +
-    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(block_ctx));
-  }
+  // if (closure_ctx->QUESTION()) {
+  //   ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, tokens_->getText(block_ctx));
+  // } else {
+  //   // *, +
+  //   ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, tokens_->getText(block_ctx));
+  // }
 
   return (antlrcpp::Any)(ele);
 }
@@ -154,6 +153,19 @@ antlrcpp::Any AuditGenVisitor::visitLabel_element(AuditGenParser::Label_elementC
 antlrcpp::Any AuditGenVisitor::visitAtom(AuditGenParser::AtomContext *ctx) {
   std::string name = tokens_->getText(ctx->identifier());
   ast::RuleElement *ele = rule_ele_tracker_.CreateInstance<ast::RuleEleNormal>(name);
+
+  auto closure_ctx = ctx->closure_sign();
+  if (closure_ctx == nullptr) {
+    return (antlrcpp::Any)ele;
+  }
+
+  if (closure_ctx->QUESTION()) {
+    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleQuestion>(ele, name);
+  } else {
+    // *, +
+    ele = rule_ele_tracker_.CreateInstance<ast::RuleEleMulti>(ele, name);
+  }
+
   return (antlrcpp::Any)ele;
 }
 
@@ -166,6 +178,9 @@ antlrcpp::Any AuditGenVisitor::visitBlock(AuditGenParser::BlockContext *ctx) {
   }
 
   ast::RuleElement *res = rule_ele_tracker_.CreateInstance<ast::RuleEleBlock>(rule_list);
+
+  // TODO: closure_sign
+
   return (antlrcpp::Any)res;
 }
 

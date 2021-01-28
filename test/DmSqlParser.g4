@@ -536,7 +536,7 @@ tablespace_recovery_file_prepare
     ;
 
 tablespace_recovery_file
-    : audit_op=SP_TABLESPACE_RECOVER '(' audit_obj=table_space=id ')'
+    : audit_op=SP_TABLESPACE_RECOVER '(' audit_obj=(table_space=id) ')'
     ;
 
 create_hts_tablespace

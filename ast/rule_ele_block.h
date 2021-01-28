@@ -24,6 +24,7 @@ public:
   std::string GenOperateTypeCode(std::string varname);
   std::string GenObjectCode(std::string varname);
   std::string ToString();
+  bool IsRuleBlock();
 
   void AddRuleElement(RuleElement *r);
 private:

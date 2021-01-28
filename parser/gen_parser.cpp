@@ -2,9 +2,9 @@
 #include <unistd.h>
 
 #include "gen_parser.h"
-#include "../syntax/generated/AuditGenLexer.h"
-#include "../syntax/generated/AuditGenParser.h"
-#include "../syntax/generated/AuditGenParserBaseVisitor.h"
+#include "syntax/generated/AuditGenLexer.h"
+#include "syntax/generated/AuditGenParser.h"
+#include "syntax/generated/AuditGenParserBaseVisitor.h"
 #include "gen_visitor.h"
 #include "error_verbose_listener.h"
 
@@ -47,6 +47,7 @@ void GenParser::WriteHeaderFileHead(const std::string& db_type) {
 
   std::string g4_parser = TrimStringTail(parser_name_, "Parser");
 
+  fhead << "#include <map>" << "\n";
   fhead << "#include \"" << g4_parser << "Parser.h\"" << "\n";
   fhead << "#include \"" << g4_parser << "Lexer.h\"" << "\n";
   fhead << "#include \"" << g4_parser << "ParserBaseListener.h\"" << "\n";
@@ -62,7 +63,12 @@ void GenParser::WriteHeaderFileHead(const std::string& db_type) {
   fhead << "  virtual ~" << class_name_ << "();" << "\n";
 
   fhead << "\n";
-  fhead << "  std::vector<OperateInfo> operate_info_list();" << "\n";
+  fhead << "  static std::map<std::string, std::string> OperateTypeMap;" << "\n";
+  fhead << "\n";
+  fhead << "  std::string GetOperateType(const std::string& op);\n";
+  fhead << "  std::vector<parser::OperateInfo> operate_info_list();" << "\n";
+  fhead << "  void SetOperateInfo(parser::OperateInfo& op, const std::string& operate, const std::string& objType);\n";
+  fhead << "  parser::OperateObject CreateOperateObject(const std::string& objectName);\n";
 
   fhead.close();
 }
@@ -112,6 +118,16 @@ void GenParser::WriteSrcFileHead(const std::string& db_type) {
   // constructure and destructure
   std::string g4_parser = TrimStringTail(parser_name_, "Parser");
   fsrc << "\n";
+
+  fsrc << "std::map<std::string, std::string> " << class_name_ << "::" << "OperateTypeMap = {" << "\n";
+  fsrc << "  {\"ALTER\", \"TABLE\"}," << "\n";
+  fsrc << "  {\"INSERT\", \"TABLE\"}," << "\n";
+  fsrc << "  {\"DELETE\", \"TABLE\"}," << "\n";
+  fsrc << "  {\"UPDATE\", \"TABLE\"}," << "\n";
+  fsrc << "  {\"MERGE\", \"TABLE\"}," << "\n";
+  fsrc << "  {\"TRUNCATE\", \"TABLE\"}," << "\n";
+  fsrc << "};\n\n";
+
   fsrc << class_name_ << "::" << class_name_ << "(" << g4_parser << "Parser * parser) : parser_(parser) {\n";
   fsrc << "  tokens_ = parser_->getTokenStream();\n";
   fsrc << "}\n";
@@ -132,18 +148,25 @@ void GenParser::WriteSrcFileTail(const std::string& db_type) {
   std::ofstream fsrc;
   fsrc.open(cpp_src_file_, std::ios::binary | std::ios::app | std::ios::out);
 
+  // GetOperateType()
+  fsrc << "std::string " << class_name_ << "::" << "GetOperateType(const std::string& op) {\n";
+  fsrc << "  auto search = OperateTypeMap.find(op);\n";
+  fsrc << "  if (search == OperateTypeMap.end()) {\n";
+  fsrc << "    return \"UNKNOWN\";\n";
+  fsrc << "  }\n";
+  fsrc << "  return search->second;\n";
+  fsrc << "}\n\n";
+
   // SetOperateInfo
-  fsrc << "void " << class_name_ << "::" << "SetOperateInfo(parsre::OperateInfo& op, const std::string& operate, const std::string& objType) {\n";
+  fsrc << "void " << class_name_ << "::" << "SetOperateInfo(parse::OperateInfo& op, const std::string& operate, const std::string& objType) {\n";
   fsrc << "  op.clear();\n";
   fsrc << "  op.operate = operate;\n";
   fsrc << "  op.objectType = objType;\n";
-  fsrc << "}\n";
+  fsrc << "}\n\n";
 
-  fsrc << "\n";
   fsrc << "parsre::OperateObject " << class_name_ << "::" << "CreateOperateObject(const std::string& objectName) {\n";
   fsrc << "  return {objectName, {}};\n";
-  fsrc << "}\n";
-  fsrc << "\n";
+  fsrc << "}\n\n";
 
   fsrc << "} // end namespace " << db_type << " \n";
 

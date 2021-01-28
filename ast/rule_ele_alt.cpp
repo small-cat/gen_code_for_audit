@@ -27,19 +27,32 @@ std::string RuleEleAlt::GenOperateCode(std::string varname) {
     return res;
   }
 
-  std::string tmpvar = "tmp_opvar";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   decltype(rule_list_.size()) idx = 0;
+  bool is_question_rule = false;
+
   for (; idx < rule_list_.size(); idx++) {
     auto ele = rule_list_.at(idx);
     ele->Indent(GetIndent());
     res += ele->GenOperateCode(tmpvar);
     ele->UnIndent(GetIndent());
 
+    is_question_rule = ele->IsRuleWithQuestion();
+
     if (idx == 0) {
       res += PrintIndent() + varname + " += " + tmpvar + ";\n";
     } else {
-      res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      if (is_question_rule) {
+        res += PrintIndent() + "if (!" + tmpvar + ".empty()) {\n";
+        Indent();
+        res += PrintIndent() + varname + " += " + varname + ".empty() ? \"\" : \" \"  + " + tmpvar + ";\n";
+        UnIndent();
+        res += PrintIndent() + "}\n";
+        is_question_rule = false;
+      } else {
+        res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      }
     }
   }
 
@@ -58,19 +71,32 @@ std::string RuleEleAlt::GenOperateTypeCode(std::string varname) {
     return res;
   }
 
-  std::string tmpvar = "tmp_opty_var";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   decltype(rule_list_.size()) idx = 0;
+  bool is_question_rule = false;
+
   for (; idx < rule_list_.size(); idx++) {
     auto ele = rule_list_.at(idx);
     ele->Indent(GetIndent());
     res += ele->GenOperateTypeCode(tmpvar);
     ele->UnIndent(GetIndent());
 
+    is_question_rule = ele->IsRuleWithQuestion();
+
     if (idx == 0) {
       res += PrintIndent() + varname + " += " + tmpvar + ";\n";
     } else {
-      res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      if (is_question_rule) {
+        res += PrintIndent() + "if (!" + tmpvar + ".empty()) {\n";
+        Indent();
+        res += PrintIndent() + varname + " += " + varname + ".empty() ? \"\" : \" \"  + " + tmpvar + ";\n";
+        UnIndent();
+        res += PrintIndent() + "}\n";
+        is_question_rule = false;
+      } else {
+        res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      }
     }
   }
 
@@ -89,19 +115,32 @@ std::string RuleEleAlt::GenObjectCode(std::string varname) {
     return res;
   }
 
-  std::string tmpvar = "tmp_objvar";
+  std::string tmpvar = "tmp" + GetUniqId();
   res += PrintIndent() + "std::string " + tmpvar + ";\n";
   decltype(rule_list_.size()) idx = 0;
+  bool is_question_rule = false;
+  
   for (; idx < rule_list_.size(); idx++) {
     auto ele = rule_list_.at(idx);
     ele->Indent(GetIndent());
     res += ele->GenObjectCode(tmpvar);
     ele->UnIndent(GetIndent());
 
+    is_question_rule = ele->IsRuleWithQuestion();
+
     if (idx == 0) {
       res += PrintIndent() + varname + " += " + tmpvar + ";\n";
     } else {
-      res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      if (is_question_rule) {
+        res += PrintIndent() + "if (!" + tmpvar + ".empty()) {\n";
+        Indent();
+        res += PrintIndent() + varname + " += " + varname + ".empty() ? \"\" : \" \"  + " + tmpvar + ";\n";
+        UnIndent();
+        res += PrintIndent() + "}\n";
+        is_question_rule = false;
+      } else {
+        res += PrintIndent() + varname + " += \" \" + " + tmpvar + ";\n";
+      }
     }
   }
 
@@ -112,7 +151,7 @@ std::string RuleEleAlt::ToString() {
   std::string res {""};
   std::string delim {""};
   for (auto r : rule_list_) {
-    if (r->IsRuleWithQuestion()) continue;
+    if (r->IsRuleWithQuestion() || r->IsRuleBlock()) continue;
     res += delim;
     res += r->ToString();
     delim = " && ";

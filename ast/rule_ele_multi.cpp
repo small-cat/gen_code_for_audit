@@ -25,13 +25,17 @@ std::string RuleEleMulti::GenObjectCode(std::string varname) {
   res += PrintIndent() + "auto obj = CreateOperateObject(tokens_->getText(obj_ctx));\n";
   res += PrintIndent() + "operate_info_.objects.push_back(obj);\n";
   UnIndent();
-  res += "}\n";
+  res += PrintIndent() + "}\n";
 
   return res;
 }
 
 std::string RuleEleMulti::ToString() {
   return "ctx->" + rule_name_ + "()";
+}
+
+bool RuleEleMulti::IsRuleMulti() {
+  return true;
 }
 
 } /* ast */
